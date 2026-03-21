@@ -16,7 +16,7 @@ function ResumePage() {
     try {
       setLoading(true)
 
-      const response = await api.post("/analyze-resume", formData, {
+      const response = await api.post("/analyze-resume/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
