@@ -20,7 +20,6 @@ function InterviewPage() {
       })
 
       setResult(response.data)
-      console.log(response.data)
     } catch (error) {
       console.error(error)
       alert("Error generating questions")
