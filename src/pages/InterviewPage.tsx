@@ -14,7 +14,7 @@ function InterviewPage() {
     try {
       setLoading(true)
 
-      const response = await api.post("/generate-questions", {
+      const response = await api.post("/resume/generate-questions", {
         role,
         experience_level: level,
       })
