@@ -64,21 +64,24 @@ function InterviewPage() {
           <h3>Technical Questions</h3>
           <ul>
             {result.technical_questions.map((q:any, i) => (
-              <li key={i}>{q.question}</li>
+              <li key={i}>{q.description}</li>
             ))}
           </ul>
 
           <h3>Scenario Questions</h3>
           <ul>
             {result.scenario_questions.map((q:any, i) => (
-              <li key={i}>{q}</li>
+               <li key={i}>
+      <strong>{q.scenario}</strong><br />
+      {q.description}
+    </li>
             ))}
           </ul>
 
           <h3>HR Questions</h3>
           <ul>
             {result.hr_questions.map((q:any, i) => (
-              <li key={i}>{q.question}</li>
+              <li key={i}>{q.description}</li>
             ))}
           </ul>
         </div>
