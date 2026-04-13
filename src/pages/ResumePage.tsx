@@ -15,13 +15,11 @@ function ResumePage() {
 
     try {
       setLoading(true)
-
       const response = await api.post("/resume/analyze", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
-
       setResult(response.data)
     } catch (error) {
       console.error(error)
@@ -32,45 +30,67 @@ function ResumePage() {
   }
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Resume Analyzer</h2>
+    <div className="max-w-3xl mx-auto mt-10">
 
-      <input
-        type="file"
-        accept=".pdf"
-        onChange={(e) => {
-          if (e.target.files) setFile(e.target.files[0])
-        }}
-      />
+      {/* Card */}
+      <div className="card bg-base-200 shadow-xl p-6">
+        <h2 className="text-2xl font-bold mb-4">Resume Analyzer</h2>
 
-      <button onClick={handleUpload} disabled={loading}>
-        {loading ? "Analyzing..." : "Analyze Resume"}
-      </button>
+        <input
+          type="file"
+          accept=".pdf"
+          className="file-input file-input-bordered w-full mb-4"
+          onChange={(e) => {
+            if (e.target.files) setFile(e.target.files[0])
+          }}
+        />
 
+        <button
+          onClick={handleUpload}
+          disabled={loading}
+          className="btn btn-primary w-full"
+        >
+          {loading ? "Analyzing..." : "Analyze Resume"}
+        </button>
+      </div>
+
+      {/* Results */}
       {result && (
-        <div style={{ marginTop: "20px" }}>
-          <h3>Score: {result.score}</h3>
+        <div className="mt-6 space-y-4">
 
-          <h4>Strengths</h4>
-          <ul>
-            {result.strengths.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
+          <div className="card bg-base-100 shadow p-4">
+            <h3 className="text-lg font-bold">
+              Score: <span className="badge badge-success">{result.score}</span>
+            </h3>
+          </div>
 
-          <h4>Weaknesses</h4>
-          <ul>
-            {result.weaknesses.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
+          <div className="card bg-base-100 shadow p-4">
+            <h4 className="font-bold">Strengths</h4>
+            <ul className="list-disc ml-5 mt-2">
+              {result.strengths.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          </div>
 
-          <h4>Improvements</h4>
-          <ul>
-            {result.improvements.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
+          <div className="card bg-base-100 shadow p-4">
+            <h4 className="font-bold">Weaknesses</h4>
+            <ul className="list-disc ml-5 mt-2">
+              {result.weaknesses.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="card bg-base-100 shadow p-4">
+            <h4 className="font-bold">Improvements</h4>
+            <ul className="list-disc ml-5 mt-2">
+              {result.improvements.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          </div>
+
         </div>
       )}
     </div>

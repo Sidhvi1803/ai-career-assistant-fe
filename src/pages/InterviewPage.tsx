@@ -13,12 +13,10 @@ function InterviewPage() {
 
     try {
       setLoading(true)
-
       const response = await api.post("/resume/generate-questions", {
         role,
         experience_level: level,
       })
-
       setResult(response.data)
     } catch (error) {
       console.error(error)
@@ -29,60 +27,76 @@ function InterviewPage() {
   }
 
   return (
-    <div>
-      <h2>Interview Question Generator</h2>
+    <div className="max-w-3xl mx-auto mt-10">
 
-      <input
-        type="text"
-        placeholder="Enter Role (e.g., Backend Developer)"
-        value={role}
-        onChange={(e) => setRole(e.target.value)}
-      />
+      {/* Card */}
+      <div className="card bg-base-200 shadow-xl p-6">
+        <h2 className="text-2xl font-bold mb-4">Interview Generator</h2>
 
-      <select
-        value={level}
-        onChange={(e) => setLevel(e.target.value)}
-        style={{ marginLeft: "10px" }}
-      >
-        <option value="">Select Experience Level</option>
-        <option value="Fresher">Fresher</option>
-        <option value="1-3 years">1-3 years</option>
-        <option value="3-5 years">3-5 years</option>
-      </select>
+        {/* Inputs */}
+        <input
+          type="text"
+          placeholder="Enter Role"
+          className="input input-bordered w-full mb-3"
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+        />
 
-      <button
-        onClick={handleGenerate}
-        disabled={loading}
-        style={{ marginLeft: "10px" }}
-      >
-        {loading ? "Generating..." : "Generate Questions"}
-      </button>
+        <select
+          className="select select-bordered w-full mb-3"
+          value={level}
+          onChange={(e) => setLevel(e.target.value)}
+        >
+          <option value="">Select Experience Level</option>
+          <option value="Fresher">Fresher</option>
+          <option value="1-3 years">1-3 years</option>
+          <option value="3-5 years">3-5 years</option>
+        </select>
 
+        {/* Button */}
+        <button
+          onClick={handleGenerate}
+          disabled={loading}
+          className="btn btn-primary w-full"
+        >
+          {loading ? "Generating..." : "Generate Questions"}
+        </button>
+      </div>
+
+      {/* Results */}
       {result && (
-        <div style={{ marginTop: "20px" }}>
-          <h3>Technical Questions</h3>
-          <ul>
-            {result.technical_questions.map((q:any, i) => (
-              <li key={i}>{q.description}</li>
-            ))}
-          </ul>
+        <div className="mt-6 space-y-4">
 
-          <h3>Scenario Questions</h3>
-          <ul>
-            {result.scenario_questions.map((q:any, i) => (
-               <li key={i}>
-      <strong>{q.scenario}</strong><br />
-      {q.description}
-    </li>
-            ))}
-          </ul>
+          <div className="card bg-base-100 shadow p-4">
+            <h3 className="font-bold text-lg">Technical Questions</h3>
+            <ul className="list-disc ml-5 mt-2">
+              {result.technical_questions.map((q: any, i) => (
+                <li key={i}>{q.description}</li>
+              ))}
+            </ul>
+          </div>
 
-          <h3>HR Questions</h3>
-          <ul>
-            {result.hr_questions.map((q:any, i) => (
-              <li key={i}>{q.description}</li>
-            ))}
-          </ul>
+          <div className="card bg-base-100 shadow p-4">
+            <h3 className="font-bold text-lg">Scenario Questions</h3>
+            <ul className="list-disc ml-5 mt-2">
+              {result.scenario_questions.map((q: any, i) => (
+                <li key={i}>
+                  <strong>{q.scenario}</strong><br />
+                  {q.description}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="card bg-base-100 shadow p-4">
+            <h3 className="font-bold text-lg">HR Questions</h3>
+            <ul className="list-disc ml-5 mt-2">
+              {result.hr_questions.map((q: any, i) => (
+                <li key={i}>{q.description}</li>
+              ))}
+            </ul>
+          </div>
+
         </div>
       )}
     </div>
